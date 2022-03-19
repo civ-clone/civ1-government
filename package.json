@@ -27,6 +27,7 @@
     "@civ-clone/base-government-despotism": "^0.1.0",
     "@civ-clone/base-government-monarchy": "^0.1.0",
     "@civ-clone/base-government-republic": "^0.1.0",
+    "@civ-clone/base-player-action-revolution": "^0.1.0",
     "@civ-clone/civ1-science": "github:civ-clone/civ1-science",
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-government": "^0.1.0",

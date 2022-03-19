@@ -7,7 +7,7 @@ import Criterion from '@civ-clone/core-rule/Criterion';
 import Effect from '@civ-clone/core-rule/Effect';
 import Player from '@civ-clone/core-player/Player';
 import PlayerAction from '@civ-clone/core-player/PlayerAction';
-import { Revolution } from '@civ-clone/core-government/PlayerActions';
+import { Revolution } from '../..//PlayerActions';
 import Action from '@civ-clone/core-player/Rules/Action';
 
 export const getRules: (

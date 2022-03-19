@@ -1,8 +1,16 @@
 import {
+  Communism as CommunismAdvance,
+  Democracy as DemocracyAdvance,
   Monarchy as MonarchyAdvance,
   TheRepublic,
 } from '@civ-clone/civ1-science/Advances';
-import { Monarchy as MonarchyGovernment, Republic } from '../../Governments';
+import {
+  Communism,
+  Democracy,
+  Despotism,
+  Monarchy,
+  Republic,
+} from '../../Governments';
 import {
   PlayerResearchRegistry,
   instance as playerResearchRegistryInstance,
@@ -17,8 +25,16 @@ export const getRules: (
 ) => Availability[] = (
   playerResearchRegistry: PlayerResearchRegistry = playerResearchRegistryInstance
 ): Availability[] => [
+  new Availability(
+    new Criterion(
+      (GovernmentType: typeof Government): boolean =>
+        GovernmentType === Despotism
+    )
+  ),
   ...[
-    [MonarchyGovernment, MonarchyAdvance],
+    [Communism, CommunismAdvance],
+    [Democracy, DemocracyAdvance],
+    [Monarchy, MonarchyAdvance],
     [Republic, TheRepublic],
   ].map(
     ([AvailableGovernment, RequiredAdvance]) =>

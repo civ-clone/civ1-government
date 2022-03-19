@@ -5,5 +5,5 @@ const action_1 = require("./Rules/Player/action");
 const added_1 = require("./Rules/Player/added");
 const availability_1 = require("./Rules/Governments/availability");
 const government_changed_1 = require("./Rules/Player/government-changed");
-RuleRegistry_1.instance.register(...action_1.default(), ...added_1.default(), ...availability_1.default(), ...government_changed_1.default());
+RuleRegistry_1.instance.register(...(0, action_1.default)(), ...(0, added_1.default)(), ...(0, availability_1.default)(), ...(0, government_changed_1.default)());
 //# sourceMappingURL=registerRules.js.map

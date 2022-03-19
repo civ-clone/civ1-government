@@ -1,1 +1,2 @@
+import './registerGovernments';
 import './registerRules';

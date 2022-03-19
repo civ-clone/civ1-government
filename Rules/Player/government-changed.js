@@ -16,7 +16,8 @@ const getRules = (engine = Engine_1.instance, playerWorldRegistry = PlayerWorldR
             return true;
         }
         catch (e) {
-            if (e instanceof TypeError && e.message.match(/Wrong number of player worlds exist/)) {
+            if (e instanceof TypeError &&
+                e.message.match(/Wrong number of player worlds exist/)) {
                 return false;
             }
             throw e;
