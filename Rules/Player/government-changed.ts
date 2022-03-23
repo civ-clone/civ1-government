@@ -11,7 +11,7 @@ import Criterion from '@civ-clone/core-rule/Criterion';
 import Effect from '@civ-clone/core-rule/Effect';
 import Government from '@civ-clone/core-government/Government';
 import Player from '@civ-clone/core-player/Player';
-import Tile from '@civ-clone/core-world/Tile';
+import PlayerTile from '@civ-clone/core-player-world/PlayerTile';
 
 export const getRules: (
   engine?: Engine,
@@ -47,7 +47,9 @@ export const getRules: (
 
       playerWorld
         .entries()
-        .forEach((tile: Tile): void => tile.clearYieldCache(player));
+        .forEach((tile: PlayerTile): void =>
+          tile.tile().clearYieldCache(player)
+        );
     })
   ),
 ];

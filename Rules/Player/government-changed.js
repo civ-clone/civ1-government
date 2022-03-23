@@ -26,7 +26,7 @@ const getRules = (engine = Engine_1.instance, playerWorldRegistry = PlayerWorldR
         const playerWorld = playerWorldRegistry.getByPlayer(player);
         playerWorld
             .entries()
-            .forEach((tile) => tile.clearYieldCache(player));
+            .forEach((tile) => tile.tile().clearYieldCache(player));
     })),
 ];
 exports.getRules = getRules;
