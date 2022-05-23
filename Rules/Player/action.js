@@ -9,7 +9,7 @@ const PlayerActions_1 = require("../..//PlayerActions");
 const Action_1 = require("@civ-clone/core-player/Rules/Action");
 const getRules = (playerGovernmentRegistry = PlayerGovernmentRegistry_1.instance) => [
     new Action_1.default(new Criterion_1.default((player) => !playerGovernmentRegistry.getByPlayer(player).is(Governments_1.Anarchy)), new Effect_1.default((player) => [
-        new PlayerActions_1.Revolution(playerGovernmentRegistry.getByPlayer(player)),
+        new PlayerActions_1.Revolution(player, playerGovernmentRegistry.getByPlayer(player)),
     ])),
 ];
 exports.getRules = getRules;

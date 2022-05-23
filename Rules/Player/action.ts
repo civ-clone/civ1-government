@@ -21,7 +21,7 @@ export const getRules: (
         !playerGovernmentRegistry.getByPlayer(player).is(Anarchy)
     ),
     new Effect((player: Player): PlayerAction[] => [
-      new Revolution(playerGovernmentRegistry.getByPlayer(player)),
+      new Revolution(player, playerGovernmentRegistry.getByPlayer(player)),
     ])
   ),
 ];
