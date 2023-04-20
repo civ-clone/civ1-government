@@ -8,7 +8,6 @@
   ],
   "author": "dom111 <dom111@users.noreply.github.com>",
   "license": "MIT",
-  "private": false,
   "scripts": {
     "build": "npm run ts:compile && npm run prettier:format",
     "prettier:check": "prettier --config .prettierrc '**/*.ts'",
@@ -21,20 +20,13 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@civ-clone/base-government-anarchy": "^0.1.0",
-    "@civ-clone/base-government-communism": "^0.1.0",
-    "@civ-clone/base-government-democracy": "^0.1.0",
-    "@civ-clone/base-government-despotism": "^0.1.0",
-    "@civ-clone/base-government-monarchy": "^0.1.0",
-    "@civ-clone/base-government-republic": "^0.1.0",
-    "@civ-clone/base-player-action-revolution": "^0.1.0",
-    "@civ-clone/civ1-science": "github:civ-clone/civ1-science",
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-government": "^0.1.0",
     "@civ-clone/core-player": "^0.1.0",
     "@civ-clone/core-player-world": "^0.1.0",
     "@civ-clone/core-rule": "^0.1.0",
     "@civ-clone/core-science": "^0.1.0",
-    "@civ-clone/core-world": "^0.1.0"
+    "@civ-clone/library-government": "^0.1.1",
+    "@civ-clone/library-science": "^0.1.0"
   }
 }

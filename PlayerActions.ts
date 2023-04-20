@@ -1,1 +1,1 @@
-export { Revolution } from '@civ-clone/base-player-action-revolution/Revolution';
+export { Revolution } from '@civ-clone/library-government/PlayerActions';

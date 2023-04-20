@@ -3,7 +3,7 @@ import {
   Democracy as DemocracyAdvance,
   Monarchy as MonarchyAdvance,
   TheRepublic,
-} from '@civ-clone/civ1-science/Advances';
+} from '@civ-clone/library-science/Advances';
 import {
   Communism,
   Democracy,
