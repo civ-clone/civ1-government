@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRules = void 0;
-const Advances_1 = require("@civ-clone/civ1-science/Advances");
+const Advances_1 = require("@civ-clone/library-science/Advances");
 const Governments_1 = require("../../Governments");
 const PlayerResearchRegistry_1 = require("@civ-clone/core-science/PlayerResearchRegistry");
 const Availability_1 = require("@civ-clone/core-government/Rules/Availability");
