@@ -85,6 +85,41 @@ describe('Revolution', (): void => {
     expect(durations).to.deep.equal([1, 2, 3, 4, 4]);
   });
 
+  it('should last two to eight turns when civil disorder causes it', (): void => {
+    const durations = [0, 0.5, 0.999].map((value) => {
+      const { game, playerGovernment } = setUp(() => value);
+
+      revolution(
+        playerGovernment,
+        game.pendingEffects,
+        game.rules,
+        game.turn,
+        'civil-disorder'
+      );
+
+      return turnsUntilChoice(playerGovernment, game.pendingEffects, game.turn);
+    });
+
+    expect(durations).to.deep.equal([2, 5, 8]);
+  });
+
+  it('should skip Anarchy after civil disorder when a rule says it lasts no turns', (): void => {
+    const { actions, game, playerGovernment } = setUp(() => 0.999);
+
+    game.rules.register(new AnarchyDuration(new Effect((): number => 0)));
+
+    revolution(
+      playerGovernment,
+      game.pendingEffects,
+      game.rules,
+      game.turn,
+      'civil-disorder'
+    );
+
+    expect(playerGovernment.is(Despotism)).true;
+    expect(actions().some((action) => action instanceof ChooseGovernment)).true;
+  });
+
   it('should put the player into Anarchy and withdraw Revolution', (): void => {
     const { actions, game, playerGovernment } = setUp();
 
