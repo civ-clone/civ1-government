@@ -12,7 +12,7 @@ import {
   instance as turnInstance,
 } from '@civ-clone/core-turn-based-game/Turn';
 import { Anarchy } from '../Governments';
-import AnarchyDuration from '../Rules/AnarchyDuration';
+import AnarchyDuration, { RevolutionCause } from '../Rules/AnarchyDuration';
 import Government from '@civ-clone/core-government/Government';
 import PlayerGovernment from '@civ-clone/core-government/PlayerGovernment';
 
@@ -68,15 +68,17 @@ export const turnsUntilChoice = (
 
 /**
  * Overthrow the current government. The player is in `Anarchy` for as many
- * turns as `AnarchyDuration` allows, then chooses a new government through
- * `ChooseGovernment`. With no Anarchy at all (the Pyramids), the choice is due
- * straight away and the current government stays until it is made.
+ * turns as `AnarchyDuration` allows for the `cause`, then chooses a new
+ * government through `ChooseGovernment`. With no Anarchy at all (the
+ * Pyramids), the choice is due straight away and the current government stays
+ * until it is made.
  */
 export const revolution = (
   playerGovernment: PlayerGovernment,
   pendingEffects: PendingEffectRegistry = pendingEffectRegistryInstance,
   ruleRegistry: RuleRegistry = ruleRegistryInstance,
-  turn: Turn = turnInstance
+  turn: Turn = turnInstance,
+  cause: RevolutionCause = 'chosen'
 ): void => {
   if (pendingRevolution(playerGovernment, pendingEffects) !== null) {
     throw new RevolutionError('A revolution is already under way.');
@@ -85,7 +87,7 @@ export const revolution = (
   const duration = Math.max(
     0,
     Math.min(
-      ...ruleRegistry.process(AnarchyDuration, playerGovernment.player())
+      ...ruleRegistry.process(AnarchyDuration, playerGovernment.player(), cause)
     )
   );
 

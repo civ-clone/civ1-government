@@ -4,6 +4,7 @@ import {
 } from '@civ-clone/core-pending-effect';
 import { RuleRegistry } from '@civ-clone/core-rule/RuleRegistry';
 import { Turn } from '@civ-clone/core-turn-based-game/Turn';
+import { RevolutionCause } from '../Rules/AnarchyDuration';
 import Government from '@civ-clone/core-government/Government';
 import PlayerGovernment from '@civ-clone/core-government/PlayerGovernment';
 /**
@@ -34,15 +35,17 @@ export declare const turnsUntilChoice: (
 ) => number | null;
 /**
  * Overthrow the current government. The player is in `Anarchy` for as many
- * turns as `AnarchyDuration` allows, then chooses a new government through
- * `ChooseGovernment`. With no Anarchy at all (the Pyramids), the choice is due
- * straight away and the current government stays until it is made.
+ * turns as `AnarchyDuration` allows for the `cause`, then chooses a new
+ * government through `ChooseGovernment`. With no Anarchy at all (the
+ * Pyramids), the choice is due straight away and the current government stays
+ * until it is made.
  */
 export declare const revolution: (
   playerGovernment: PlayerGovernment,
   pendingEffects?: PendingEffectRegistry,
   ruleRegistry?: RuleRegistry,
-  turn?: Turn
+  turn?: Turn,
+  cause?: RevolutionCause
 ) => void;
 /** Finish a revolution whose Anarchy is over, by choosing one of the available governments. */
 export declare const chooseGovernment: (
