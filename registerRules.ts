@@ -1,13 +1,15 @@
 import action from './Rules/Player/action';
 import added from './Rules/Player/added';
+import anarchyDuration from './Rules/Player/anarchy-duration';
 import availability from './Rules/Governments/availability';
 import governmentChanged from './Rules/Player/government-changed';
 import { Game, defaultGame } from '@civ-clone/core-game';
 
 export const register = (game: Game): void =>
   game.rules.register(
-    ...action(game.playerGovernments),
+    ...action(game.playerGovernments, game.pendingEffects, game.turn),
     ...added(game.availableGovernments, game.playerGovernments, game.rules),
+    ...anarchyDuration(game.rng),
     ...availability(game.playerResearch),
     ...governmentChanged(game.engine, game.playerWorlds)
   );
