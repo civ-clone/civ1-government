@@ -10,23 +10,33 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run ts:compile && npm run prettier:format",
-    "prettier:check": "prettier --config .prettierrc '**/*.ts'",
+    "prettier:check": "prettier --config .prettierrc --check '**/*.ts'",
     "prettier:format": "prettier --config .prettierrc '**/*.ts' --write",
+    "test": "ts-mocha ./tests/*.test.ts",
     "ts:compile": "tsc --build tsconfig.json"
   },
   "devDependencies": {
+    "@civ-clone/core-save-game": "^0.1.10",
+    "@types/chai": "^4.0.0",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^14.11.2",
+    "chai": "^4.0.0",
+    "mocha": "^10.0.0",
     "prettier": "^2.1.2",
+    "ts-mocha": "^10.0.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-game": "^0.1.1",
     "@civ-clone/core-government": "^0.1.0",
+    "@civ-clone/core-pending-effect": "^0.1.2",
     "@civ-clone/core-player": "^0.1.0",
     "@civ-clone/core-player-world": "^0.1.0",
+    "@civ-clone/core-random": "^0.1.0",
     "@civ-clone/core-rule": "^0.1.0",
     "@civ-clone/core-science": "^0.1.0",
+    "@civ-clone/core-turn-based-game": "^0.1.8",
     "@civ-clone/library-government": "^0.1.1",
     "@civ-clone/library-science": "^0.1.0"
   }
