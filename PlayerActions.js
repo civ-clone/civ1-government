@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChooseGovernment = exports.Revolution = void 0;
-const MandatoryPlayerAction_1 = require("@civ-clone/core-player/MandatoryPlayerAction");
+exports.Revolution = exports.ChooseGovernment = void 0;
+// ChooseGovernment moved to base-player-action-choose-government (civ-clone/web-renderer#1008): this path re-exports
+//  the same class.
+var ChooseGovernment_1 = require("@civ-clone/base-player-action-choose-government/ChooseGovernment");
+Object.defineProperty(exports, "ChooseGovernment", { enumerable: true, get: function () { return ChooseGovernment_1.ChooseGovernment; } });
 var PlayerActions_1 = require("@civ-clone/library-government/PlayerActions");
 Object.defineProperty(exports, "Revolution", { enumerable: true, get: function () { return PlayerActions_1.Revolution; } });
-/** Offered once a revolution's Anarchy is over, and must be answered before the turn can end. */
-class ChooseGovernment extends MandatoryPlayerAction_1.default {
-}
-exports.ChooseGovernment = ChooseGovernment;
 //# sourceMappingURL=PlayerActions.js.map
