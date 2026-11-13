@@ -1,14 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnarchyDuration = void 0;
-const Rule_1 = require("@civ-clone/core-rule/Rule");
-/**
- * How many turns of `Anarchy` a revolution starting now would cause. Every
- * matching rule is asked and the shortest answer wins, so a rule that removes
- * Anarchy (the Pyramids, in `civ1-wonder`) only has to return `0`.
- */
-class AnarchyDuration extends Rule_1.default {
-}
-exports.AnarchyDuration = AnarchyDuration;
-exports.default = AnarchyDuration;
+exports.default = exports.AnarchyDuration = void 0;
+var AnarchyDuration_1 = require("@civ-clone/base-government-change/Rules/AnarchyDuration");
+Object.defineProperty(exports, "AnarchyDuration", { enumerable: true, get: function () { return AnarchyDuration_1.AnarchyDuration; } });
+Object.defineProperty(exports, "default", { enumerable: true, get: function () { return AnarchyDuration_1.default; } });
 //# sourceMappingURL=AnarchyDuration.js.map

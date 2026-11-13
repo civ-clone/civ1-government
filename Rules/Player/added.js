@@ -8,13 +8,10 @@ const Added_1 = require("@civ-clone/core-player/Rules/Added");
 const Governments_1 = require("../../Governments");
 const Effect_1 = require("@civ-clone/core-rule/Effect");
 const High_1 = require("@civ-clone/core-rule/Priorities/High");
-const PlayerGovernment_1 = require("@civ-clone/core-government/PlayerGovernment");
+const playerGovernment_1 = require("@civ-clone/base-government-change/lib/playerGovernment");
 const getRules = (availableGovernmentRegistry = AvailableGovernmentRegistry_1.instance, playerGovernmentRegistry = PlayerGovernmentRegistry_1.instance, ruleRegistry = RuleRegistry_1.instance) => [
-    new Added_1.default(new High_1.default(), new Effect_1.default((player) => {
-        const playerGovernment = new PlayerGovernment_1.default(player, availableGovernmentRegistry, ruleRegistry);
-        playerGovernment.set(new Governments_1.Despotism());
-        playerGovernmentRegistry.register(playerGovernment);
-    })),
+    // Every player starts under Despotism.
+    new Added_1.default(new High_1.default(), new Effect_1.default((player) => (0, playerGovernment_1.default)(player, Governments_1.Despotism, availableGovernmentRegistry, playerGovernmentRegistry, ruleRegistry))),
 ];
 exports.getRules = getRules;
 exports.default = exports.getRules;

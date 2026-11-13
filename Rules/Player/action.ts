@@ -1,4 +1,3 @@
-import { ChooseGovernment, Revolution } from '../../PlayerActions';
 import {
   PendingEffectRegistry,
   instance as pendingEffectRegistryInstance,
@@ -7,21 +6,22 @@ import {
   PlayerGovernmentRegistry,
   instance as playerGovernmentRegistryInstance,
 } from '@civ-clone/core-government/PlayerGovernmentRegistry';
+import { REVOLUTION, registerHandler } from '../../lib/revolution';
 import {
   Turn,
   instance as turnInstance,
 } from '@civ-clone/core-turn-based-game/Turn';
 import {
-  pendingRevolution,
-  registerHandler,
-  turnsUntilChoice,
-} from '../../lib/revolution';
+  choiceDue,
+  noRevolutionPending,
+  notInInterim,
+  offerGovernmentChoice,
+  offerRevolution,
+} from '@civ-clone/base-government-change/lib/actions';
 import Action from '@civ-clone/core-player/Rules/Action';
 import { Anarchy } from '../../Governments';
 import Criterion from '@civ-clone/core-rule/Criterion';
 import Effect from '@civ-clone/core-rule/Effect';
-import Player from '@civ-clone/core-player/Player';
-import PlayerAction from '@civ-clone/core-player/PlayerAction';
 
 export const getRules: (
   playerGovernmentRegistry?: PlayerGovernmentRegistry,
@@ -38,38 +38,23 @@ export const getRules: (
 
   return [
     new Action(
-      new Criterion(
-        (player: Player): boolean =>
-          !playerGovernmentRegistry.getByPlayer(player).is(Anarchy)
-      ),
+      new Criterion(notInInterim(Anarchy, playerGovernmentRegistry)),
       // With the Pyramids there's no Anarchy, but the new government still
       // has to be chosen before another revolution.
       new Criterion(
-        (player: Player): boolean =>
-          pendingRevolution(
-            playerGovernmentRegistry.getByPlayer(player),
-            pendingEffects
-          ) === null
+        noRevolutionPending(
+          REVOLUTION,
+          playerGovernmentRegistry,
+          pendingEffects
+        )
       ),
-      new Effect((player: Player): PlayerAction[] => [
-        new Revolution(player, playerGovernmentRegistry.getByPlayer(player)),
-      ])
+      new Effect(offerRevolution(playerGovernmentRegistry))
     ),
     new Action(
       new Criterion(
-        (player: Player): boolean =>
-          turnsUntilChoice(
-            playerGovernmentRegistry.getByPlayer(player),
-            pendingEffects,
-            turn
-          ) === 0
+        choiceDue(REVOLUTION, playerGovernmentRegistry, pendingEffects, turn)
       ),
-      new Effect((player: Player): PlayerAction[] => [
-        new ChooseGovernment(
-          player,
-          playerGovernmentRegistry.getByPlayer(player)
-        ),
-      ])
+      new Effect(offerGovernmentChoice(playerGovernmentRegistry))
     ),
   ];
 };

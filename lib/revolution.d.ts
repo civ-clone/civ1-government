@@ -4,21 +4,18 @@ import {
 } from '@civ-clone/core-pending-effect';
 import { RuleRegistry } from '@civ-clone/core-rule/RuleRegistry';
 import { Turn } from '@civ-clone/core-turn-based-game/Turn';
-import { RevolutionCause } from '../Rules/AnarchyDuration';
+import { applyChosenGovernment } from '@civ-clone/base-government-change/lib/revolution';
 import Government from '@civ-clone/core-government/Government';
 import PlayerGovernment from '@civ-clone/core-government/PlayerGovernment';
+import { RevolutionCause } from '../Rules/AnarchyDuration';
 /**
  * Recorded in the save for a revolution whose new government has not been
  * chosen yet. The target is the `PlayerGovernment`, and `endTurn` is the turn
  * the choice becomes due.
  */
 export declare const REVOLUTION = 'civ1-government:revolution';
-export declare class RevolutionError extends Error {}
-/** What a pending revolution needs to discharge: the chosen government. */
-export declare const applyChosenGovernment: (
-  pendingEffect: PendingEffect,
-  GovernmentType: typeof Government
-) => void;
+export { RevolutionError } from '@civ-clone/base-government-change/lib/revolution';
+export { applyChosenGovernment };
 /** Registered with the rules, at import, so a revolution loaded from a save can still be finished. */
 export declare const registerHandler: (
   pendingEffects?: PendingEffectRegistry

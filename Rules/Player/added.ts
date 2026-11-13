@@ -15,7 +15,7 @@ import { Despotism } from '../../Governments';
 import Effect from '@civ-clone/core-rule/Effect';
 import High from '@civ-clone/core-rule/Priorities/High';
 import Player from '@civ-clone/core-player/Player';
-import PlayerGovernment from '@civ-clone/core-government/PlayerGovernment';
+import addPlayerGovernment from '@civ-clone/base-government-change/lib/playerGovernment';
 
 export const getRules: (
   availableGovernmentRegistry?: AvailableGovernmentRegistry,
@@ -26,19 +26,18 @@ export const getRules: (
   playerGovernmentRegistry: PlayerGovernmentRegistry = playerGovernmentRegistryInstance,
   ruleRegistry: RuleRegistry = ruleRegistryInstance
 ): Added[] => [
+  // Every player starts under Despotism.
   new Added(
     new High(),
-    new Effect((player: Player): void => {
-      const playerGovernment = new PlayerGovernment(
+    new Effect((player: Player): void =>
+      addPlayerGovernment(
         player,
+        Despotism,
         availableGovernmentRegistry,
+        playerGovernmentRegistry,
         ruleRegistry
-      );
-
-      playerGovernment.set(new Despotism());
-
-      playerGovernmentRegistry.register(playerGovernment);
-    })
+      )
+    )
   ),
 ];
 
