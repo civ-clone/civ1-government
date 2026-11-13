@@ -1,7 +1,4 @@
-import MandatoryPlayerAction from '@civ-clone/core-player/MandatoryPlayerAction';
-import PlayerGovernment from '@civ-clone/core-government/PlayerGovernment';
-
+// ChooseGovernment moved to base-player-action-choose-government (civ-clone/web-renderer#1008): this path re-exports
+//  the same class.
+export { ChooseGovernment } from '@civ-clone/base-player-action-choose-government/ChooseGovernment';
 export { Revolution } from '@civ-clone/library-government/PlayerActions';
-
-/** Offered once a revolution's Anarchy is over, and must be answered before the turn can end. */
-export class ChooseGovernment extends MandatoryPlayerAction<PlayerGovernment> {}
