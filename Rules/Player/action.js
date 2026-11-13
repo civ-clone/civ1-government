@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRules = void 0;
-const PlayerActions_1 = require("../../PlayerActions");
 const core_pending_effect_1 = require("@civ-clone/core-pending-effect");
 const PlayerGovernmentRegistry_1 = require("@civ-clone/core-government/PlayerGovernmentRegistry");
-const Turn_1 = require("@civ-clone/core-turn-based-game/Turn");
 const revolution_1 = require("../../lib/revolution");
+const Turn_1 = require("@civ-clone/core-turn-based-game/Turn");
+const actions_1 = require("@civ-clone/base-government-change/lib/actions");
 const Action_1 = require("@civ-clone/core-player/Rules/Action");
 const Governments_1 = require("../../Governments");
 const Criterion_1 = require("@civ-clone/core-rule/Criterion");
@@ -15,15 +15,11 @@ const getRules = (playerGovernmentRegistry = PlayerGovernmentRegistry_1.instance
     // can still finish it.
     (0, revolution_1.registerHandler)(pendingEffects);
     return [
-        new Action_1.default(new Criterion_1.default((player) => !playerGovernmentRegistry.getByPlayer(player).is(Governments_1.Anarchy)), 
+        new Action_1.default(new Criterion_1.default((0, actions_1.notInInterim)(Governments_1.Anarchy, playerGovernmentRegistry)), 
         // With the Pyramids there's no Anarchy, but the new government still
         // has to be chosen before another revolution.
-        new Criterion_1.default((player) => (0, revolution_1.pendingRevolution)(playerGovernmentRegistry.getByPlayer(player), pendingEffects) === null), new Effect_1.default((player) => [
-            new PlayerActions_1.Revolution(player, playerGovernmentRegistry.getByPlayer(player)),
-        ])),
-        new Action_1.default(new Criterion_1.default((player) => (0, revolution_1.turnsUntilChoice)(playerGovernmentRegistry.getByPlayer(player), pendingEffects, turn) === 0), new Effect_1.default((player) => [
-            new PlayerActions_1.ChooseGovernment(player, playerGovernmentRegistry.getByPlayer(player)),
-        ])),
+        new Criterion_1.default((0, actions_1.noRevolutionPending)(revolution_1.REVOLUTION, playerGovernmentRegistry, pendingEffects)), new Effect_1.default((0, actions_1.offerRevolution)(playerGovernmentRegistry))),
+        new Action_1.default(new Criterion_1.default((0, actions_1.choiceDue)(revolution_1.REVOLUTION, playerGovernmentRegistry, pendingEffects, turn)), new Effect_1.default((0, actions_1.offerGovernmentChoice)(playerGovernmentRegistry))),
     ];
 };
 exports.getRules = getRules;

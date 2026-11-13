@@ -2,10 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRules = exports.deriveAvailabilityRules = exports.availabilityRulesFor = void 0;
 const PlayerResearchRegistry_1 = require("@civ-clone/core-science/PlayerResearchRegistry");
-const Requirement_1 = require("@civ-clone/core-requirement/Requirement");
-const Availability_1 = require("@civ-clone/core-government/Rules/Availability");
-const Criterion_1 = require("@civ-clone/core-rule/Criterion");
 const Requirements_1 = require("../../Requirements");
+const availability_1 = require("@civ-clone/base-government-change/lib/availability");
 /**
  * The rule `entry` is played by: a player may choose its subject while it has the advances the entry `requires`.
  *
@@ -14,22 +12,10 @@ const Requirements_1 = require("../../Requirements");
  * Pyramids' rule in `civ1-wonder` is) opens another way rather than closing this one.
  *
  * An entry with no targets (Despotism) is always met, so its rule only checks the government, as it always has.
+ *
+ * The rule itself moved to base-government-change (civ-clone/web-renderer#1008).
  */
-const availabilityRulesFor = (entry, playerResearchRegistry = PlayerResearchRegistry_1.instance) => {
-    if (entry.relation !== 'requires') {
-        return [];
-    }
-    const isSubject = new Criterion_1.default((GovernmentType) => GovernmentType === entry.subject);
-    if (entry.targets.length === 0) {
-        return [new Availability_1.default(entry.id, isSubject)];
-    }
-    return [
-        new Availability_1.default(entry.id, isSubject, new Criterion_1.default((GovernmentType, player) => {
-            const playerResearch = playerResearchRegistry.getByPlayer(player);
-            return (0, Requirement_1.met)(entry, (target) => playerResearch.completed(target));
-        })),
-    ];
-};
+const availabilityRulesFor = (entry, playerResearchRegistry = PlayerResearchRegistry_1.instance) => (0, availability_1.availabilityRulesFor)(entry, playerResearchRegistry);
 exports.availabilityRulesFor = availabilityRulesFor;
 /** What `registerRules` gives the game's `requirements` to make each entry's rules with. */
 const deriveAvailabilityRules = (playerResearchRegistry) => (entry) => (0, exports.availabilityRulesFor)(entry, playerResearchRegistry);

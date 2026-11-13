@@ -1,7 +1,7 @@
 import { PlayerResearchRegistry } from '@civ-clone/core-science/PlayerResearchRegistry';
-import { Requirement } from '@civ-clone/core-requirement/Requirement';
 import Availability from '@civ-clone/core-government/Rules/Availability';
 import { Deriver } from '@civ-clone/core-requirement/RequirementRegistry';
+import { Requirement } from '@civ-clone/core-requirement/Requirement';
 /**
  * The rule `entry` is played by: a player may choose its subject while it has the advances the entry `requires`.
  *
@@ -10,6 +10,8 @@ import { Deriver } from '@civ-clone/core-requirement/RequirementRegistry';
  * Pyramids' rule in `civ1-wonder` is) opens another way rather than closing this one.
  *
  * An entry with no targets (Despotism) is always met, so its rule only checks the government, as it always has.
+ *
+ * The rule itself moved to base-government-change (civ-clone/web-renderer#1008).
  */
 export declare const availabilityRulesFor: (
   entry: Requirement,

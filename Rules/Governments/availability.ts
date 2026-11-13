@@ -2,18 +2,11 @@ import {
   PlayerResearchRegistry,
   instance as playerResearchRegistryInstance,
 } from '@civ-clone/core-science/PlayerResearchRegistry';
-import {
-  Requirement,
-  Target,
-  met,
-} from '@civ-clone/core-requirement/Requirement';
-import Advance from '@civ-clone/core-science/Advance';
 import Availability from '@civ-clone/core-government/Rules/Availability';
-import Criterion from '@civ-clone/core-rule/Criterion';
 import { Deriver } from '@civ-clone/core-requirement/RequirementRegistry';
-import Government from '@civ-clone/core-government/Government';
-import Player from '@civ-clone/core-player/Player';
+import { Requirement } from '@civ-clone/core-requirement/Requirement';
 import availabilityRequirements from '../../Requirements';
+import { availabilityRulesFor as availabilityRulesForEntry } from '@civ-clone/base-government-change/lib/availability';
 
 /**
  * The rule `entry` is played by: a player may choose its subject while it has the advances the entry `requires`.
@@ -23,38 +16,13 @@ import availabilityRequirements from '../../Requirements';
  * Pyramids' rule in `civ1-wonder` is) opens another way rather than closing this one.
  *
  * An entry with no targets (Despotism) is always met, so its rule only checks the government, as it always has.
+ *
+ * The rule itself moved to base-government-change (civ-clone/web-renderer#1008).
  */
 export const availabilityRulesFor = (
   entry: Requirement,
   playerResearchRegistry: PlayerResearchRegistry = playerResearchRegistryInstance
-): Availability[] => {
-  if (entry.relation !== 'requires') {
-    return [];
-  }
-
-  const isSubject = new Criterion(
-    (GovernmentType: typeof Government): boolean =>
-      GovernmentType === entry.subject
-  );
-
-  if (entry.targets.length === 0) {
-    return [new Availability(entry.id, isSubject)];
-  }
-
-  return [
-    new Availability(
-      entry.id,
-      isSubject,
-      new Criterion((GovernmentType: typeof Government, player: Player) => {
-        const playerResearch = playerResearchRegistry.getByPlayer(player);
-
-        return met(entry, (target: Target): boolean =>
-          playerResearch.completed(target as typeof Advance)
-        );
-      })
-    ),
-  ];
-};
+): Availability[] => availabilityRulesForEntry(entry, playerResearchRegistry);
 
 /** What `registerRules` gives the game's `requirements` to make each entry's rules with. */
 export const deriveAvailabilityRules =
