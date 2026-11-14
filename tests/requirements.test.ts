@@ -24,6 +24,7 @@ import anarchyDuration from '../Rules/Player/anarchy-duration';
 import availability from '../Requirements';
 import { expect } from 'chai';
 import getRules from '../Rules/Governments/availability';
+import revolutionTerms from '../Rules/Player/revolution-terms';
 import governmentChanged from '../Rules/Player/government-changed';
 import register from '../registerRules';
 
@@ -97,7 +98,8 @@ describe('civ1-government requirements', (): void => {
       'civ1-government:governments/availability/Republic',
     ]);
 
-    // And between the same rules as before: everything `register` used to spread into one call, in that order.
+    // And between the same rules as before: everything `register` used to spread into one call, in that order, then
+    //  `RevolutionTerms`, added last.
     before.rules.register(
       ...action(before.playerGovernments, before.pendingEffects, before.turn),
       ...added(
@@ -107,7 +109,8 @@ describe('civ1-government requirements', (): void => {
       ),
       ...anarchyDuration(before.rng),
       ...getRules(before.playerResearch),
-      ...governmentChanged(before.engine, before.playerWorlds)
+      ...governmentChanged(before.engine, before.playerWorlds),
+      ...revolutionTerms()
     );
 
     const kinds = (rules: Rule[]): string[] =>

@@ -4,6 +4,7 @@ import anarchyDuration from './Rules/Player/anarchy-duration';
 import availability from './Requirements';
 import { deriveAvailabilityRules } from './Rules/Governments/availability';
 import governmentChanged from './Rules/Player/government-changed';
+import revolutionTerms from './Rules/Player/revolution-terms';
 import { Game, defaultGame } from '@civ-clone/core-game';
 
 export const register = (game: Game): void => {
@@ -22,6 +23,9 @@ export const register = (game: Game): void => {
   );
 
   game.rules.register(...governmentChanged(game.engine, game.playerWorlds));
+
+  // Last, so no other rule moves in the order rules run.
+  game.rules.register(...revolutionTerms());
 };
 
 // The plugin loader imports each package for this side effect. Until it passes
