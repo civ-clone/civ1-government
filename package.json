@@ -27,7 +27,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@civ-clone/base-government-change": "^0.1.0",
+    "@civ-clone/base-government-change": "github:civ-clone/base-government-change#feat/revolution-terms",
     "@civ-clone/base-player-action-choose-government": "^0.1.0",
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-game": "^0.1.14",
