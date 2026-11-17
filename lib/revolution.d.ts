@@ -34,8 +34,9 @@ export declare const turnsUntilChoice: (
  * Overthrow the current government. The player is in `Anarchy` for as many
  * turns as `AnarchyDuration` allows for the `cause`, then chooses a new
  * government through `ChooseGovernment`. With no Anarchy at all (the
- * Pyramids), the choice is due straight away and the current government stays
- * until it is made.
+ * Pyramids), the choice is due straight away and, for a chosen revolution, the
+ * current government stays until it is made; a government civil disorder
+ * brings down is in `Anarchy` until then.
  */
 export declare const revolution: (
   playerGovernment: PlayerGovernment,
