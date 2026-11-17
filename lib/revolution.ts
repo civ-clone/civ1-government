@@ -61,8 +61,9 @@ export const turnsUntilChoice = (
  * Overthrow the current government. The player is in `Anarchy` for as many
  * turns as `AnarchyDuration` allows for the `cause`, then chooses a new
  * government through `ChooseGovernment`. With no Anarchy at all (the
- * Pyramids), the choice is due straight away and the current government stays
- * until it is made.
+ * Pyramids), the choice is due straight away and, for a chosen revolution, the
+ * current government stays until it is made; a government civil disorder
+ * brings down is in `Anarchy` until then.
  */
 export const revolution = (
   playerGovernment: PlayerGovernment,
@@ -70,7 +71,7 @@ export const revolution = (
   ruleRegistry: RuleRegistry = ruleRegistryInstance,
   turn: Turn = turnInstance,
   cause: RevolutionCause = 'chosen'
-): void =>
+): void => {
   revolutionFor(
     REVOLUTION,
     Anarchy,
@@ -80,6 +81,16 @@ export const revolution = (
     turn,
     cause
   );
+
+  // A government brought down by civil disorder falls into Anarchy at once, however short a rule (the Pyramids) makes
+  //  the Anarchy: v474.05 calls `set_government(selected_owner, 0)` (`CITYMGT.C` ~1798) whatever Wonders the player
+  //  has. The Pyramids end the Anarchy at the `city_phase` (`DIPLOMAC.C` ~40) that follows the player's cities being
+  //  worked that turn (`TURN.C` ~159-162), so the new government can be chosen straight away, and the cities still to
+  //  be judged for disorder and celebration that turn see Anarchy (civ-clone/web-renderer#1018).
+  if (cause === 'civil-disorder' && !playerGovernment.is(Anarchy)) {
+    playerGovernment.set(new Anarchy());
+  }
+};
 
 /** Finish a revolution whose Anarchy is over, by choosing one of the available governments. */
 export const chooseGovernment = (

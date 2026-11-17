@@ -103,7 +103,7 @@ describe('Revolution', (): void => {
     expect(durations).to.deep.equal([2, 5, 8]);
   });
 
-  it('should skip Anarchy after civil disorder when a rule says it lasts no turns', (): void => {
+  it('should still fall into Anarchy after civil disorder when a rule says it lasts no turns, with the choice due at once (civ-clone/web-renderer#1018)', (): void => {
     const { actions, game, playerGovernment } = setUp(() => 0.999);
 
     game.rules.register(new AnarchyDuration(new Effect((): number => 0)));
@@ -115,6 +115,20 @@ describe('Revolution', (): void => {
       game.turn,
       'civil-disorder'
     );
+
+    expect(playerGovernment.is(Anarchy)).true;
+    expect(
+      turnsUntilChoice(playerGovernment, game.pendingEffects, game.turn)
+    ).equal(0);
+    expect(actions().some((action) => action instanceof ChooseGovernment)).true;
+  });
+
+  it('should skip Anarchy for a chosen revolution when a rule says it lasts no turns', (): void => {
+    const { actions, game, playerGovernment } = setUp(() => 0.999);
+
+    game.rules.register(new AnarchyDuration(new Effect((): number => 0)));
+
+    revolution(playerGovernment, game.pendingEffects, game.rules, game.turn);
 
     expect(playerGovernment.is(Despotism)).true;
     expect(actions().some((action) => action instanceof ChooseGovernment)).true;
